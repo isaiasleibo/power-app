@@ -1,0 +1,197 @@
+#tracks {
+    display: flex;
+    flex-direction: column;
+
+    #tracks-header {
+        position: fixed;
+        z-index: 99;
+        width: 100%;
+
+        h2 {
+            font-size: 24px;
+            text-align: center;
+        }
+
+        #slider {
+            background-color: #5a5a5a;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            box-shadow: rgba(50, 50, 93, 0.15) 0px 13px 27px -5px, rgba(0, 0, 0, 0.15) 0px 8px 16px -8px;
+            width: 100%;
+            height: 35px;
+
+            p {
+                font-weight: 500;
+                color: #ffffff;
+                font-size: 14px;
+
+                &.active {
+                    font-weight: 700;
+                    text-decoration: underline;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+
+    .chart-container {
+        background-color: white;
+        width: calc(100% - 80px);
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #c2c2c2;
+        margin: 0 auto;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        margin-top: 55px;
+
+        #header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+
+            h3 {
+                font-size: 18px;
+            }
+
+            #buttons {
+                background-color: #555555;
+                border-radius: 10px;
+            }
+
+            button {
+                all: unset;
+                padding: 5px;
+                color: white;
+                border-radius: 6px;
+                transition: background-color 500ms;
+                transition: border-radius 500ms;
+                transition: scale 500ms;
+                scale: 1;
+                z-index: 1;
+
+                p {
+                    font-size: 14px;
+                }
+
+                &.active {
+                    background-color: #222222;
+                    padding: 7px;
+                    border-radius: 8px;
+                    margin-bottom: 0px;
+                    scale: 1.1;
+                    z-index: 2;
+                    position: relative;
+                }
+            }
+        }
+
+        #grafic {
+            height: 200px;
+        }
+    }
+
+    #weight-data {
+        background-color: white;
+        width: calc(100% - 100px);
+        padding: 15px 30px;
+        border-radius: 10px;
+        border: 1px solid #c2c2c2;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+        .data {
+            text-align: center;
+
+            .title {
+                color: #ff9452;
+                font-weight: 600;
+                font-size: 16px;
+            }
+
+            .description {
+                font-size: 13px;
+                margin-top: 3px;
+                font-weight: 600;
+            }
+        }
+    }
+
+    #history {
+        width: calc(100% - 40px);
+        margin: 0 auto;
+        margin-top: 20px;
+
+        #title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 1px solid #c2c2c2;
+            margin-top: 10px;
+
+            #main-data {
+                p {
+                    font-weight: 500;
+                }
+
+                .upgrade {
+                    display: flex;
+                    align-items: center;
+
+                    svg {
+                        margin-right: 5px;
+                        height: 25px;
+                    }
+
+                    &.more {
+                        p {
+                            color: #0081d6;
+                        }
+
+                        path {
+                            fill: #0081d6;
+                        }
+                    }
+
+                    &.less {
+                        p {
+                            color: #d81616;
+                        }
+
+                        path {
+                            fill: #d81616;
+                        }
+                    }
+                }
+            }
+
+            #date {
+                display: flex;
+                align-items: center;
+
+                svg {
+                    height: 18px;
+                    margin-right: 5px;
+                }
+
+                p {
+                    font-size: 14px;
+                    width: 85px;
+                }
+            }
+        }
+    }
+}
