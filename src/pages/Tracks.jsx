@@ -27,8 +27,6 @@ const Tracks = () => {
     { date: '2025-03-08', weight: 69 },
   ];
 
-  console.log(weightData[weightData.length - 1].weight)
-
   const getFilteredData = (months) => {
     const cutoffDate = new Date();
     cutoffDate.setMonth(cutoffDate.getMonth() - months);
