@@ -25,6 +25,8 @@
                 font-weight: 500;
                 color: #ffffff;
                 font-size: 14px;
+                transition: all 300ms;
+                cursor: pointer;
 
                 &.active {
                     font-weight: 700;
