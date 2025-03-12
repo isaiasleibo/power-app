@@ -16,15 +16,16 @@ const Home = () => {
   const weekSplitData = ["Pecho y espalda", "Pierna y hombro", "Biceps y triceps", "Día de descanso", "Espalda y femoral", "pecho y hombro", "Día de descanso"]
 
   const handlePrevMonth = () => {
-    setDate(new Date(date.getFullYear(), date.getMonth() - 1, 1));
+    setDate(prevDate => new Date(prevDate.getFullYear(), prevDate.getMonth() - 1, 1));
   };
 
   const handleNextMonth = () => {
-    setDate(new Date(date.getFullYear(), date.getMonth() + 1, 1));
+    setDate(prevDate => new Date(prevDate.getFullYear(), prevDate.getMonth() + 1, 1));
   };
 
   const monthNames = [
-    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", 
+    "Septiembre", "Octubre", "Noviembre", "Diciembre"
   ];
 
 

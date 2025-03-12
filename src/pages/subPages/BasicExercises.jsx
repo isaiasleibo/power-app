@@ -51,7 +51,7 @@ const BasicExercises = () => {
         { date: '2025-03-11', weight: 132 },
     ];
 
-    const Exercise = ({ title, data }) => {
+    const Exercise = ({ title, data, color }) => {
         const [filter, setFilter] = useState(3)
 
         return (
@@ -66,7 +66,7 @@ const BasicExercises = () => {
                         </div>
                     </div>
                     <div id="grafic">
-                        <BasicExerciseGrafic data={data} filter={filter} />
+                        <BasicExerciseGrafic data={data} filter={filter} color={color} />
                     </div>
                 </div>
 
@@ -92,9 +92,9 @@ const BasicExercises = () => {
     return (
         <>
             <div id="exercises">
-                <Exercise title="Sentadilla" data={squatData} />
-                <Exercise title="Press Banca" data={benchData} />
-                <Exercise title="Peso Muerto" data={deadliftData} />
+                <Exercise title="Sentadilla" data={squatData} color="#ff3030" />
+                <Exercise title="Press Banca" data={benchData} color='#139133' />
+                <Exercise title="Peso Muerto" data={deadliftData} color="#205bfa" />
             </div>
         </>
     );
