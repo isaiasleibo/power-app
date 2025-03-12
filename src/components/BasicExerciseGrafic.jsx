@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { Line } from 'react-chartjs-2'
 
 const BasicExerciseGrafic = ({ data, filter }) => {
@@ -70,7 +70,7 @@ const BasicExerciseGrafic = ({ data, filter }) => {
         data: filteredData.map(entry => entry.weight),
         borderColor: '#00c3ff',
         backgroundColor: '#00c3ff',
-        tension: 0.3,
+        tension: 0,
       },
     ],
   };

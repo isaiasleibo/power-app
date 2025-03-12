@@ -343,10 +343,11 @@
             z-index: 4;
             position: absolute;
             top: 0;
-            right: 15px;
+            right: 0;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 0 15px;
 
             svg {
               height: 20px;

@@ -37,7 +37,8 @@
         }
     }
 
-    .chart-container {
+    .chart-container,
+    .exercise {
         background-color: white;
         width: calc(100% - 80px);
         padding: 20px;
@@ -45,7 +46,18 @@
         border: 1px solid #c2c2c2;
         margin: 0 auto;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-        margin-top: 55px;
+
+        &.chart-container {
+            margin-top: 55px;
+        }
+
+        &.exercise:first-child {
+            margin-top: 55px;
+        }
+
+        &.exercise {
+            margin-top: 30px;
+        }
 
         #header {
             display: flex;
@@ -60,6 +72,7 @@
             #buttons {
                 background-color: #555555;
                 border-radius: 10px;
+                cursor: pointer;
             }
 
             button {
