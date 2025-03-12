@@ -118,12 +118,10 @@
         display: flex !important;
         flex-direction: column;
         font-weight: 600;
-        justify-content: center;
-        align-items: center;
-        width: calc(100% - 20px) !important;
+        width: calc(100% - 10px) !important;
         margin: 0 auto;
-        padding: 10px 5px;
         height: 80px;
+        overflow: hidden;
 
         .text {
           text-align: center;
@@ -134,8 +132,9 @@
 
         .day {
           background-color: #dadada44;
-          padding: 3px 10px;
-          border-radius: 10px;
+          width: 100%;
+          text-align: center;
+          padding: 3px 0;
         }
       }
 

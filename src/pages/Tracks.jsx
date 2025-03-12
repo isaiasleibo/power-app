@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import '../scss/Tracks.scss'
 import CorporalWeight from './subPages/CorporalWeight';
 import BasicExercises from './subPages/BasicExercises';
+import SubTracks from './subPages/SubTracks';
 
 const Tracks = () => {
   const [section, setSection] = useState(2);
@@ -22,6 +23,7 @@ const Tracks = () => {
 
       {section === 2 && <CorporalWeight />}
       {section === 1 && <BasicExercises />}
+      {section === 3 && <SubTracks />}
       <Footer tracks />
     </div>
   );

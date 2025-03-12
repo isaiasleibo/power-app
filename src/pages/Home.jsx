@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import Slider from 'react-slick';
-import CarouselGrafic from '../components/CarouselGrafic'; // Asegúrate de importar el nuevo componente
+import Calendar from 'react-calendar';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../scss/Home.scss';
+import '../scss/Calendar.scss'
 import Header from '../components/Header';
 import WeekCarousel from '../components/WeekCarousel';
 import Footer from '../components/Footer';
@@ -11,68 +11,21 @@ import WeightInput from '../components/WeightInput';
 
 const Home = () => {
   const [wheightInputActive, setWheightInputActive] = useState(false)
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: "7%",
-    arrows: false
-  };
-
-  const weightData = [
-    { date: '08-01', weight: 82 },
-    { date: '08-15', weight: 81 },
-    { date: '09-01', weight: 80 },
-    { date: '09-15', weight: 79 },
-    { date: '10-01', weight: 78 },
-    { date: '10-15', weight: 77 },
-    { date: '11-01', weight: 76 },
-    { date: '11-15', weight: 75 },
-    { date: '12-01', weight: 76 },
-    { date: '12-15', weight: 75 },
-    { date: '01-01', weight: 74 },
-    { date: '01-15', weight: 73 },
-    { date: '02-01', weight: 72 },
-    { date: '02-15', weight: 71 },
-    { date: '03-01', weight: 70 },
-    { date: '03-08', weight: 69 },
-  ];
-
-  const deadliftData = [
-    { date: '01-01', weight: 125 },
-    { date: '01-02', weight: 130 },
-    { date: '01-03', weight: 128 },
-    { date: '01-04', weight: 135 },
-    { date: '01-05', weight: 145 },
-    { date: '01-06', weight: 140 },
-    { date: '01-07', weight: 150 },
-  ];
-
-  const benchPressData = [
-    { date: '01-01', weight: 130 },
-    { date: '01-02', weight: 125 },
-    { date: '01-03', weight: 135 },
-    { date: '01-04', weight: 140 },
-    { date: '01-05', weight: 150 },
-    { date: '01-06', weight: 145 },
-    { date: '01-07', weight: 155 },
-  ];
-
-  const squatData = [
-    { date: '01-01', weight: 120 },
-    { date: '01-02', weight: 125 },
-    { date: '01-03', weight: 130 },
-    { date: '01-04', weight: 140 },
-    { date: '01-05', weight: 135 },
-    { date: '01-06', weight: 145 },
-    { date: '01-07', weight: 150 },
-  ];
+  const [date, setDate] = useState(new Date());
 
   const weekSplitData = ["Pecho y espalda", "Pierna y hombro", "Biceps y triceps", "Día de descanso", "Espalda y femoral", "pecho y hombro", "Día de descanso"]
+
+  const handlePrevMonth = () => {
+    setDate(new Date(date.getFullYear(), date.getMonth() - 1, 1));
+  };
+
+  const handleNextMonth = () => {
+    setDate(new Date(date.getFullYear(), date.getMonth() + 1, 1));
+  };
+
+  const monthNames = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+  ];
 
 
   return (
@@ -81,21 +34,19 @@ const Home = () => {
       <Footer home />
       {wheightInputActive && <WeightInput setWheightInputActive={setWheightInputActive} />}
 
-      <div className="carousel-container">
-        <Slider {...settings}>
-          <div className="carousel-item">
-            <CarouselGrafic data={weightData} name={'Peso Corporal'} />
-          </div>
-          <div className="carousel-item">
-            <CarouselGrafic data={squatData} name={'Sentadilla'} />
-          </div>
-          <div className="carousel-item">
-            <CarouselGrafic data={benchPressData} name={'Press Banca'} />
-          </div>
-          <div className="carousel-item">
-            <CarouselGrafic data={deadliftData} name={'Peso Muerto'} />
-          </div>
-        </Slider>
+      <div className="calendar-container">
+        <div className="calendar-header">
+          <button onClick={handlePrevMonth}>{'<'}</button>
+          <h2>{monthNames[date.getMonth()]} {date.getFullYear()}</h2>
+          <button onClick={handleNextMonth}>{'>'}</button>
+        </div>
+        <Calendar 
+          onChange={setDate} 
+          value={date} 
+          showNavigation={false} 
+          view="month" 
+          maxDetail="month" 
+        />
       </div>
 
       <div id="planificationButton">
