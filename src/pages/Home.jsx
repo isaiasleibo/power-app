@@ -46,6 +46,7 @@ const Home = () => {
           showNavigation={false} 
           view="month" 
           maxDetail="month" 
+          showFixedNumberOfWeeks={true}
         />
       </div>
 
