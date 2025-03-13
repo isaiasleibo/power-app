@@ -51,8 +51,8 @@ const BasicExercises = () => {
         { date: '2025-03-11', weight: 132 },
     ];
 
-    const Exercise = ({ title, data, color }) => {
-        const [filter, setFilter] = useState(3)
+    const Exercise = ({ title, data, color, dotColor }) => {
+        const [filter, setFilter] = useState(2)
 
         return (
             <>
@@ -60,13 +60,13 @@ const BasicExercises = () => {
                     <div id="header">
                         <h3>{title}</h3>
                         <div id='buttons'>
-                            <button onClick={() => setFilter(1)} className={filter === 1 ? 'active' : ''}><p>1m</p></button>
-                            <button onClick={() => setFilter(3)} className={filter === 3 ? 'active' : ''}><p>3m</p></button>
+                            <button onClick={() => setFilter(2)} className={filter === 2 ? 'active' : ''}><p>2m</p></button>
                             <button onClick={() => setFilter(6)} className={filter === 6 ? 'active' : ''}><p>6m</p></button>
+                            <button id="all" onClick={() => setFilter(10000)} className={filter === 10000 ? 'active' : ''}><p>All</p></button>
                         </div>
                     </div>
                     <div id="grafic">
-                        <BasicExerciseGrafic data={data} filter={filter} color={color} />
+                        <BasicExerciseGrafic data={data} filter={filter} color={color} dotColor={dotColor} />
                     </div>
                 </div>
 
@@ -92,9 +92,9 @@ const BasicExercises = () => {
     return (
         <>
             <div id="exercises">
-                <Exercise title="Sentadilla" data={squatData} color="#ff3030" />
-                <Exercise title="Press Banca" data={benchData} color='#139133' />
-                <Exercise title="Peso Muerto" data={deadliftData} color="#205bfa" />
+                <Exercise title="Sentadilla" data={squatData} color="#ff3030" dotColor="#9e0500" />
+                <Exercise title="Press Banca" data={benchData} color='#139133' dotColor="#004712" />
+                <Exercise title="Peso Muerto" data={deadliftData} color="#205bfa" dotColor="#00227d" />
             </div>
         </>
     );

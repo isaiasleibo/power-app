@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Line } from 'react-chartjs-2';
 
 const CorporalWeight = () => {
-  const [filter, setFilter] = useState(3);
+  const [filter, setFilter] = useState(2);
 
   const weightData = [
     { date: '2024-08-01', weight: 82 },
@@ -23,45 +23,46 @@ const CorporalWeight = () => {
     { date: '2025-03-08', weight: 69 },
   ];
 
-    const getFilteredData = (months) => {
-      const cutoffDate = new Date();
-      cutoffDate.setMonth(cutoffDate.getMonth() - months);
-  
-      const filtered = weightData.filter(entry => {
-          const [year, month, day] = entry.date.split('-').map(Number);
-          const entryDate = new Date(year, month - 1, day);
-          return entryDate >= cutoffDate;
-      });
-  
-      const maxPoints = 30;
-      if (filtered.length <= maxPoints) return filtered;
-  
-      const step = Math.ceil(filtered.length / maxPoints);
-      let reducedData = filtered.filter((_, index) => index % step === 0);
-  
-      const lastPoint = filtered[filtered.length - 1];
-      if (!reducedData.includes(lastPoint)) {
-          reducedData.push(lastPoint);
-      }
-  
-      return reducedData;
+  const getFilteredData = (months) => {
+    const cutoffDate = new Date();
+    cutoffDate.setMonth(cutoffDate.getMonth() - months);
+
+    const filtered = weightData.filter(entry => {
+      const [year, month, day] = entry.date.split('-').map(Number);
+      const entryDate = new Date(year, month - 1, day);
+      return entryDate >= cutoffDate;
+    });
+
+    const maxPoints = 30;
+    if (filtered.length <= maxPoints) return filtered;
+
+    const step = Math.ceil(filtered.length / maxPoints);
+    let reducedData = filtered.filter((_, index) => index % step === 0);
+
+    const lastPoint = filtered[filtered.length - 1];
+    if (!reducedData.includes(lastPoint)) {
+      reducedData.push(lastPoint);
+    }
+
+    return reducedData;
   };
-  
+
   // Uso:
   const filteredData = getFilteredData(filter);
-  
+
   const weightDataReverse = [...weightData].reverse();
 
   const chartData = {
     labels: filteredData.map(entry => entry.date.substring(5)),
     datasets: [
       {
-        label: 'Kg',
+        label: '',
         data: filteredData.map(entry => entry.weight),
         borderColor: '#ff9100',
-        backgroundColor: '#000000',
+        backgroundColor: '#854c01',
         borderWidth: 2,
         pointRadius: 2,
+        pointHitRadius: 20,
         pointBorderWidth: 0,
         tension: 0,
       },
@@ -108,6 +109,11 @@ const CorporalWeight = () => {
         backgroundColor: '#fff',
         titleColor: '#222222',
         bodyColor: '#222222',
+        callbacks: {
+          label: function (context) {
+            return `${context.raw} kg`;
+          }
+        }
       },
       legend: {
         display: false,
@@ -121,9 +127,9 @@ const CorporalWeight = () => {
         <div id="header">
           <h3>Último peso: {weightData[weightData.length - 1].weight}kg</h3>
           <div id='buttons'>
-            <button onClick={() => setFilter(1)} className={filter === 1 ? 'active' : ''}><p>1m</p></button>
-            <button onClick={() => setFilter(3)} className={filter === 3 ? 'active' : ''}><p>3m</p></button>
+            <button onClick={() => setFilter(2)} className={filter === 2 ? 'active' : ''}><p>2m</p></button>
             <button onClick={() => setFilter(6)} className={filter === 6 ? 'active' : ''}><p>6m</p></button>
+            <button id="all" onClick={() => setFilter(10000)} className={filter === 10000 ? ' active' : ''}><p>All</p></button>
           </div>
         </div>
         <div id="grafic">
@@ -157,7 +163,7 @@ const CorporalWeight = () => {
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#e3e3e3">
                     <path d="M120-240q-33 0-56.5-23.5T40-320q0-33 23.5-56.5T120-400h10.5q4.5 0 9.5 2l182-182q-2-5-2-9.5V-600q0-33 23.5-56.5T400-680q33 0 56.5 23.5T480-600q0 2-2 20l102 102q5-2 9.5-2h21q4.5 0 9.5 2l142-142q-2-5-2-9.5V-640q0-33 23.5-56.5T840-720q33 0 56.5 23.5T920-640q0 33-23.5 56.5T840-560h-10.5q-4.5 0-9.5-2L678-420q2 5 2 9.5v10.5q0 33-23.5 56.5T600-320q-33 0-56.5-23.5T520-400v-10.5q0-4.5 2-9.5L420-522q-5 2-9.5 2H400q-2 0-20-2L198-340q2 5 2 9.5v10.5q0 33-23.5 56.5T120-240Z" />
                   </svg>
-                  <svg className="equal" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#e3e3e3"><path d="M160-280v-120h640v120H160Zm0-280v-120h640v120H160Z"/></svg>
+                  <svg className="equal" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#e3e3e3"><path d="M160-280v-120h640v120H160Zm0-280v-120h640v120H160Z" /></svg>
                   <p>{parseFloat(diff).toFixed(2).replace(/\.00$/, '')}kg</p>
 
                 </div>

@@ -73,7 +73,11 @@
                 background-color: #555555;
                 border-radius: 10px;
                 cursor: pointer;
-                height: 31px;
+                height: 34px;
+                display: flex;
+                width: 100px;
+                justify-content: space-between;
+                align-items: center;
             }
 
             button {
@@ -84,9 +88,24 @@
                 transition: all 500ms;
                 scale: 1;
                 z-index: 1;
+                height: 22px;
+                width: 22px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &#all {
+                    padding-left: 0;
+
+                    p {
+                        font-family: "Public Sans", sans-serif;
+                    }
+                }
 
                 p {
                     font-size: 14px;
+                    height: fit-content;
+                    margin-top: 1px;
                 }
 
                 &.active {
@@ -94,9 +113,13 @@
                     padding: 7px;
                     border-radius: 8px;
                     margin-bottom: 0px;
-                    scale: 1.1;
+                    transform: scale(1.1);
                     z-index: 2;
-                    position: relative;
+                    padding-left: 7px !important;
+
+                    p {
+                        margin-right: 0 !important;
+                    }
                 }
             }
         }
