@@ -16,7 +16,8 @@
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.3",
     "recharts": "^2.15.1",
-    "sass": "^1.85.1",
+    "sass-embedded": "^1.85.1",
+    "sass-loader": "^16.0.5",
     "slick-carousel": "^1.8.1",
     "swiper": "^11.2.5",
     "web-vitals": "^2.1.4"
