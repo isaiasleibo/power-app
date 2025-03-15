@@ -1,5 +1,6 @@
 import React from 'react'
 import { Line } from 'react-chartjs-2'
+import dayjs from 'dayjs';
 
 const BasicExerciseGrafic = ({ data, filter, color, dotColor }) => {
   
@@ -28,11 +29,11 @@ const BasicExerciseGrafic = ({ data, filter, color, dotColor }) => {
   };
 
   const filteredData = getFilteredData(filter);
+  const labels = filteredData.map((d) => dayjs(d.date).format("DD/MM"));
 
   // Calcular valores mínimo y máximo con margen de 20 unidades
   const minValue = Math.ceil((Math.min(...filteredData.map(entry => entry.weight)) - 10) / 10) * 10;
   const maxValue = Math.floor((Math.max(...filteredData.map(entry => entry.weight)) + 10)/ 10) * 10;
-  console.log(minValue, maxValue)
 
   const options = {
     responsive: true,
@@ -89,7 +90,7 @@ const BasicExerciseGrafic = ({ data, filter, color, dotColor }) => {
   };
 
   const chartData = {
-    labels: filteredData.map(entry => entry.date.substring(5)),
+    labels,
     datasets: [
       {
         label: '',

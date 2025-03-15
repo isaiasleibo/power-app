@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Line } from 'react-chartjs-2';
+import dayjs from 'dayjs';
 
 const CorporalWeight = () => {
   const [filter, setFilter] = useState(2);
@@ -49,11 +50,12 @@ const CorporalWeight = () => {
 
   // Uso:
   const filteredData = getFilteredData(filter);
+  const labels = filteredData.map((d) => dayjs(d.date).format("DD/MM"));
 
   const weightDataReverse = [...weightData].reverse();
 
   const chartData = {
-    labels: filteredData.map(entry => entry.date.substring(5)),
+    labels,
     datasets: [
       {
         label: '',
@@ -155,7 +157,19 @@ const CorporalWeight = () => {
       <div id="history">
         <p id="title">Historial:</p>
         {weightDataReverse.map((entry, index) => {
+          function hasOneDigit(num) {
+            num = Math.abs(num);
+            return num < 10; 
+        }
+
           const diff = index === weightDataReverse.length - 1 ? 0 : entry.weight - weightDataReverse[index + 1].weight;
+          const date = new Date(entry.date)
+          const day = date.getDate()
+          const month = date.getMonth()
+          const year = date.getFullYear()
+          const fixedDay = hasOneDigit(day) ? `0${day}` : `${day}`
+          const fixedMonth = hasOneDigit(month) ? `0${month}` : `${month}`
+
           return (
             <div className="history-item" key={entry.date}>
               <div id="main-data">
@@ -171,7 +185,7 @@ const CorporalWeight = () => {
               </div>
               <div id="date">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M96 32l0 32L48 64C21.5 64 0 85.5 0 112l0 48 448 0 0-48c0-26.5-21.5-48-48-48l-48 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L160 64l0-32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192L0 192 0 464c0 26.5 21.5 48 48 48l352 0c26.5 0 48-21.5 48-48l0-272z" /></svg>
-                <p>{entry.date}</p>
+                <p>{fixedDay}/{fixedMonth}/{year}</p>
               </div>
             </div>
           );
