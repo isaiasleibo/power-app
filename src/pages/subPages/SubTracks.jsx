@@ -1,5 +1,5 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 import dayjs from "dayjs";
 
 const SubTracks = () => {
@@ -34,6 +34,38 @@ const SubTracks = () => {
     { date: "2024-10-28", value: 3.6 }
   ];
 
+  const completeFatigueData = [
+    { date: "2024-10-01", empujes: 3.2, traccion: 2.8, piernas: 3.5 },
+    { date: "2024-10-02", empujes: 3.21, traccion: 2.82, piernas: 3.52 },
+    { date: "2024-10-03", empujes: 3.23, traccion: 2.83, piernas: 3.54 },
+    { date: "2024-10-04", empujes: 3.24, traccion: 2.85, piernas: 3.55 },
+    { date: "2024-10-05", empujes: 3.26, traccion: 2.87, piernas: 3.57 },
+    { date: "2024-10-06", empujes: 3.27, traccion: 2.89, piernas: 3.58 },
+    { date: "2024-10-07", empujes: 3.29, traccion: 2.9, piernas: 3.6 },
+    { date: "2024-10-08", empujes: 3.3, traccion: 2.92, piernas: 3.61 },
+    { date: "2024-10-09", empujes: 3.32, traccion: 2.94, piernas: 3.63 },
+    { date: "2024-10-10", empujes: 3.33, traccion: 2.95, piernas: 3.65 },
+    { date: "2024-10-11", empujes: 3.35, traccion: 2.97, piernas: 3.66 },
+    { date: "2024-10-12", empujes: 3.36, traccion: 2.99, piernas: 3.68 },
+    { date: "2024-10-13", empujes: 3.38, traccion: 3.0, piernas: 3.69 },
+    { date: "2024-10-14", empujes: 3.39, traccion: 3.02, piernas: 3.71 },
+    { date: "2024-10-15", empujes: 3.41, traccion: 3.04, piernas: 3.73 },
+    { date: "2024-10-16", empujes: 3.42, traccion: 3.05, piernas: 3.74 },
+    { date: "2024-10-17", empujes: 3.44, traccion: 3.07, piernas: 3.76 },
+    { date: "2024-10-18", empujes: 3.45, traccion: 3.08, piernas: 3.78 },
+    { date: "2024-10-19", empujes: 3.47, traccion: 3.1, piernas: 3.79 },
+    { date: "2024-10-20", empujes: 3.48, traccion: 3.12, piernas: 3.81 },
+    { date: "2024-10-21", empujes: 3.5, traccion: 3.13, piernas: 3.83 },
+    { date: "2024-10-22", empujes: 3.51, traccion: 3.15, piernas: 3.84 },
+    { date: "2024-10-23", empujes: 3.53, traccion: 3.17, piernas: 3.86 },
+    { date: "2024-10-24", empujes: 3.54, traccion: 3.18, piernas: 3.87 },
+    { date: "2024-10-25", empujes: 3.56, traccion: 3.2, piernas: 3.89 },
+    { date: "2024-10-26", empujes: 3.57, traccion: 3.22, piernas: 3.91 },
+    { date: "2024-10-27", empujes: 3.59, traccion: 3.23, piernas: 3.92 },
+    { date: "2024-10-28", empujes: 3.6, traccion: 3.25, piernas: 3.94 }
+];
+
+
 
   const fatigueData = [
     { date: "2024-10-01", value: 2.8 },
@@ -66,6 +98,23 @@ const SubTracks = () => {
     { date: "2024-10-28", value: 3.0 }
   ];
 
+  const getWeeklyAverages = (data) => {
+    const weeks = [];
+    for (let i = 0; i < data.length; i += 7) {
+      const week = data.slice(i, i + 7);
+      const avgEmpujes =
+        week.reduce((sum, day) => sum + day.empujes, 0) / week.length;
+      const avgTraccion =
+        week.reduce((sum, day) => sum + day.traccion, 0) / week.length;
+      const avgPiernas =
+        week.reduce((sum, day) => sum + day.piernas, 0) / week.length;
+  
+      weeks.push({ empujes: avgEmpujes.toFixed(2), traccion: avgTraccion.toFixed(2), piernas: avgPiernas.toFixed(2) });
+    }
+    return weeks;
+  };
+
+  const weeklyAverages = getWeeklyAverages(completeFatigueData);
 
   const getFilteredData = (data) => {
 
@@ -115,6 +164,28 @@ const SubTracks = () => {
       },
     ],
   };
+
+  const barData = {
+    labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+    datasets: [
+      {
+        label: "Piernas",
+        data: weeklyAverages.map((week) => week.piernas),
+        backgroundColor: "rgb(168, 0, 0)",
+      },
+      {
+        label: "Empujes",
+        data: weeklyAverages.map((week) => week.empujes),
+        backgroundColor: "rgb(0, 191, 99)",
+      },
+      {
+        label: "Tracción",
+        data: weeklyAverages.map((week) => week.traccion),
+        backgroundColor: "rgb(0, 74, 173)",
+      },
+    ],
+  };
+  
 
   const options = {
     responsive: true,
@@ -170,6 +241,68 @@ const SubTracks = () => {
     },
   };
 
+  const barOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: {
+          color: '#222222',
+          font: {
+            family: "'Rubik', sans-serif",
+            size: 12,
+            weight: 'bold',
+          },
+          maxTicksLimit: 4,
+        },
+        grid: {
+          display: true,
+          color: 'rgba(200, 200, 200, 0.5)',
+        },
+      },
+      y: {
+        suggestedMin: 1,
+        suggestedMax: 2,
+        ticks: {
+          color: '#222222',
+          font: {
+            family: "'Rubik', sans-serif",
+            size: 12,
+            weight: 'bold',
+          },
+          maxTicksLimit: 5,
+        },
+        grid: {
+          display: true,
+          color: 'rgba(200, 200, 200, 0.5)',
+        },
+      },
+    },
+    plugins: {
+      tooltip: {
+        backgroundColor: '#fff',
+        titleColor: '#222222',
+        bodyColor: '#222222',
+        callbacks: {
+          label: function (context) {
+            return `Valor: ${context.raw}`;
+          },
+        },
+      },
+      legend: {
+        display: true, // Asegura que la leyenda esté visible
+        labels: {
+          font: {
+            family: "'Rubik', sans-serif",
+            size: 14,
+            weight: 'bold',
+          },
+        },
+      },
+    },
+  };
+  
+
   return (
     <div id="exercises">
       <div className="exercise">
@@ -181,6 +314,17 @@ const SubTracks = () => {
         </div>
         <div id="grafic">
           <Line data={data} options={options} />
+        </div>
+      </div>
+      <div className="exercise">
+      <div id="header">
+          <h3>Fatiga</h3>
+          <div id="block">
+            <p>Actual block</p>
+          </div>
+        </div>
+        <div id="grafic">
+          <Bar data={barData} options={barOptions} />
         </div>
       </div>
     </div>
