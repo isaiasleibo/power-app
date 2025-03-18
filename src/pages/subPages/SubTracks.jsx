@@ -50,7 +50,6 @@ const SubTracks = () => {
     { date: "2024-10-13", empujes: 3.38, traccion: 3.0, piernas: 3.69 },
     { date: "2024-10-14", empujes: 3.39, traccion: 3.02, piernas: 3.71 },
     { date: "2024-10-15", empujes: 3.41, traccion: 3.04, piernas: 3.73 },
-    { date: "2024-10-16", empujes: 3.42, traccion: 3.05, piernas: 3.74 },
     { date: "2024-10-17", empujes: 3.44, traccion: 3.07, piernas: 3.76 },
     { date: "2024-10-18", empujes: 3.45, traccion: 3.08, piernas: 3.78 },
     { date: "2024-10-19", empujes: 3.47, traccion: 3.1, piernas: 3.79 },
@@ -70,7 +69,6 @@ const SubTracks = () => {
   const fatigueData = [
     { date: "2024-10-01", value: 2.8 },
     { date: "2024-10-02", value: 2.81 },
-    { date: "2024-10-03", value: 2.81 },
     { date: "2024-10-04", value: 2.82 },
     { date: "2024-10-05", value: 2.83 },
     { date: "2024-10-06", value: 2.84 },
@@ -99,20 +97,55 @@ const SubTracks = () => {
   ];
 
   const getWeeklyAverages = (data) => {
-    const weeks = [];
-    for (let i = 0; i < data.length; i += 7) {
-      const week = data.slice(i, i + 7);
-      const avgEmpujes =
-        week.reduce((sum, day) => sum + day.empujes, 0) / week.length;
-      const avgTraccion =
-        week.reduce((sum, day) => sum + day.traccion, 0) / week.length;
-      const avgPiernas =
-        week.reduce((sum, day) => sum + day.piernas, 0) / week.length;
+    if (data.length === 0) return [];
   
-      weeks.push({ empujes: avgEmpujes.toFixed(2), traccion: avgTraccion.toFixed(2), piernas: avgPiernas.toFixed(2) });
+    // Ordenar datos por fecha (por si no vienen ordenados)
+    const sortedData = [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
+  
+    // Obtener la primera y última fecha
+    let startDate = new Date(sortedData[0].date);
+    const endDate = new Date(sortedData[sortedData.length - 1].date);
+  
+    // Ajustar `startDate` al lunes más cercano anterior o igual
+    startDate.setDate(startDate.getDate() - ((startDate.getDay() + 6) % 7));
+  
+    const weeks = [];
+  
+    while (startDate <= endDate) {
+      // Calcular el final de la semana (lunes siguiente)
+      let weekEnd = new Date(startDate);
+      weekEnd.setDate(weekEnd.getDate() + 6);
+  
+      // Filtrar datos que caen en esta semana
+      const weekData = sortedData.filter((d) => {
+        const date = new Date(d.date);
+        return date >= startDate && date <= weekEnd;
+      });
+  
+      // Si hay datos en la semana, calcular promedios
+      if (weekData.length > 0) {
+        const avgEmpujes = weekData.reduce((sum, day) => sum + day.empujes, 0) / weekData.length;
+        const avgTraccion = weekData.reduce((sum, day) => sum + day.traccion, 0) / weekData.length;
+        const avgPiernas = weekData.reduce((sum, day) => sum + day.piernas, 0) / weekData.length;
+  
+        weeks.push({
+          startDate: startDate.toISOString().split("T")[0],
+          endDate: weekEnd.toISOString().split("T")[0],
+          empujes: avgEmpujes.toFixed(2),
+          traccion: avgTraccion.toFixed(2),
+          piernas: avgPiernas.toFixed(2),
+        });
+      }
+  
+      // Avanzar a la próxima semana (lunes siguiente)
+      startDate.setDate(startDate.getDate() + 7);
     }
+  
+    console.log(weeks);
     return weeks;
   };
+  
+  
 
   const weeklyAverages = getWeeklyAverages(completeFatigueData);
 
@@ -166,7 +199,7 @@ const SubTracks = () => {
   };
 
   const barData = {
-    labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+    labels: weeklyAverages.map((_, index) => `Week ${index + 1}`),
     datasets: [
       {
         label: "Piernas",
@@ -253,7 +286,7 @@ const SubTracks = () => {
             size: 12,
             weight: 'bold',
           },
-          maxTicksLimit: 4,
+          maxTicksLimit: weeklyAverages.length,
         },
         grid: {
           display: true,
@@ -292,9 +325,11 @@ const SubTracks = () => {
       legend: {
         display: true, // Asegura que la leyenda esté visible
         labels: {
+          boxWidth: 15,
+          boxHeight: 12,
           font: {
             family: "'Rubik', sans-serif",
-            size: 14,
+            size: 12,
             weight: 'bold',
           },
         },
