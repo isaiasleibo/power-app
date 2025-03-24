@@ -1,6 +1,18 @@
 import React from 'react'
-import { Line } from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  LineElement,
+  LinearScale,
+  TimeScale,
+  PointElement,
+  Tooltip,
+  Legend
+} from 'chart.js';
+import 'chartjs-adapter-date-fns';
 import dayjs from 'dayjs';
+
+ChartJS.register(LineElement, LinearScale, TimeScale, PointElement, Tooltip, Legend);
 
 const BasicExerciseGrafic = ({ data, filter, color, dotColor }) => {
   
@@ -29,7 +41,23 @@ const BasicExerciseGrafic = ({ data, filter, color, dotColor }) => {
   };
 
   const filteredData = getFilteredData(filter);
-  const labels = filteredData.map((d) => dayjs(d.date).format("DD/MM"));
+
+  const chartData = {
+    labels: filteredData.map(d => new Date(d.date)),
+    datasets: [
+      {
+        label: '',
+        data: filteredData.map(entry => entry.weight),
+        borderColor: color || '#00c3ff',
+        backgroundColor: dotColor || '#000000',
+        borderWidth: 2,
+        pointRadius: 2,
+        pointBorderWidth: 0,
+        tension: 0,
+        pointHitRadius: 20
+      },
+    ],
+  };
 
   // Calcular valores mínimo y máximo con margen de 20 unidades
   const minValue = Math.ceil((Math.min(...filteredData.map(entry => entry.weight)) - 10) / 10) * 10;
@@ -40,6 +68,15 @@ const BasicExerciseGrafic = ({ data, filter, color, dotColor }) => {
     maintainAspectRatio: false,
     scales: {
       x: {
+        type: 'time',
+        time: {
+          unit: 'day', // O 'month' si querés más espaciado
+          tooltipFormat: 'dd/MM/yyyy',
+          displayFormats: {
+            day: 'dd/MM',
+            month: 'MMM yyyy',
+          },
+        },
         ticks: {
           color: '#222222',
           font: {
@@ -87,23 +124,6 @@ const BasicExerciseGrafic = ({ data, filter, color, dotColor }) => {
         display: false,
       },
     },
-  };
-
-  const chartData = {
-    labels,
-    datasets: [
-      {
-        label: '',
-        data: filteredData.map(entry => entry.weight),
-        borderColor: color || '#00c3ff',
-        backgroundColor: dotColor || '#000000',
-        borderWidth: 2,
-        pointRadius: 2,
-        pointBorderWidth: 0,
-        tension: 0,
-        pointHitRadius: 20
-      },
-    ],
   };
 
   return (

@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import Home from './pages/Home';
 import Tracks from './pages/Tracks';
-import Diary from './pages/Diary';
+import Blocks from './pages/Blocks';
 import './App.css'
 
 const App = () => {
@@ -15,7 +15,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tracks" element={<Tracks />} />
-        <Route path="/diary" element={<Diary />} />
+        <Route path="/blocks" element={<Blocks />} />
       </Routes>
     </Router>
   );

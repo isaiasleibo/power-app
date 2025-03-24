@@ -1,6 +1,17 @@
 import React, { useState } from 'react'
 import { Line } from 'react-chartjs-2';
-import dayjs from 'dayjs';
+import {
+  Chart as ChartJS,
+  LineElement,
+  LinearScale,
+  TimeScale,
+  PointElement,
+  Tooltip,
+  Legend
+} from 'chart.js';
+import 'chartjs-adapter-date-fns';
+
+ChartJS.register(LineElement, LinearScale, TimeScale, PointElement, Tooltip, Legend);
 
 const CorporalWeight = () => {
   const [filter, setFilter] = useState(2);
@@ -8,9 +19,6 @@ const CorporalWeight = () => {
   const weightData = [
     { date: '2024-08-01', weight: 82 },
     { date: '2024-08-15', weight: 81 },
-    { date: '2024-09-01', weight: 80 },
-    { date: '2024-09-15', weight: 79 },
-    { date: '2024-10-01', weight: 78 },
     { date: '2024-10-15', weight: 77 },
     { date: '2024-11-01', weight: 76 },
     { date: '2024-11-15', weight: 75 },
@@ -20,7 +28,6 @@ const CorporalWeight = () => {
     { date: '2025-01-15', weight: 73 },
     { date: '2025-02-01', weight: 72 },
     { date: '2025-02-15', weight: 71 },
-    { date: '2025-03-01', weight: 70 },
     { date: '2025-03-08', weight: 69 },
   ];
 
@@ -50,15 +57,14 @@ const CorporalWeight = () => {
 
   // Uso:
   const filteredData = getFilteredData(filter);
-  const labels = filteredData.map((d) => dayjs(d.date).format("DD/MM"));
 
   const weightDataReverse = [...weightData].reverse();
 
   const chartData = {
-    labels,
+    labels: filteredData.map(d => new Date(d.date)),
     datasets: [
       {
-        label: '',
+        label: 'Peso Corporal',
         data: filteredData.map(entry => entry.weight),
         borderColor: '#ff9100',
         backgroundColor: '#854c01',
@@ -66,7 +72,7 @@ const CorporalWeight = () => {
         pointRadius: 2,
         pointHitRadius: 20,
         pointBorderWidth: 0,
-        tension: 0,
+        tension: 0.2,
       },
     ],
   };
@@ -76,14 +82,24 @@ const CorporalWeight = () => {
     maintainAspectRatio: false,
     scales: {
       x: {
+        type: 'time',
+        time: {
+          unit: 'day', // O 'month' si querés más espaciado
+          tooltipFormat: 'dd/MM/yyyy',
+          displayFormats: {
+            day: 'dd/MM',
+            month: 'MMM yyyy',
+          },
+        },
         ticks: {
+          source: 'auto', // Opcional: podés cambiar a 'labels' si querés definir puntos fijos
           color: '#222222',
           font: {
             family: "'Rubik', sans-serif",
             size: 12,
             weight: 'bold',
           },
-          maxTicksLimit: 4,
+          maxTicksLimit: 5, // Ajustalo según el espacio disponible
         },
         grid: {
           display: true,
@@ -92,7 +108,7 @@ const CorporalWeight = () => {
       },
       y: {
         ticks: {
-          color: '#2222222',
+          color: '#222222',
           font: {
             family: "'Rubik', sans-serif",
             size: 12,
@@ -159,8 +175,8 @@ const CorporalWeight = () => {
         {weightDataReverse.map((entry, index) => {
           function hasOneDigit(num) {
             num = Math.abs(num);
-            return num < 10; 
-        }
+            return num < 10;
+          }
 
           const diff = index === weightDataReverse.length - 1 ? 0 : entry.weight - weightDataReverse[index + 1].weight;
           const date = new Date(entry.date)

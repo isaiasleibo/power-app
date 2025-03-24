@@ -2,7 +2,7 @@ import React from 'react'
 import '../scss/Footer.scss'
 import { Link } from 'react-router-dom'
 
-const Footer = ({ home, tracks, diary }) => {
+const Footer = ({ home, tracks, blocks }) => {
   return (
     <footer>
       <Link to='/'>
@@ -11,10 +11,10 @@ const Footer = ({ home, tracks, diary }) => {
           <p>Inicio</p>
         </div>
       </Link>
-      <Link to='/diary'>
-        <div className={`footer-item${diary ? ' active' : ''}`}>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#e3e3e3"><path d="M282-622 168-508q-11 11-27.5 11.5T112-508q-11-11-11.5-27.5T111-564l29-30-28-28q-12-12-12-28t12-28l56-56-29-30q-11-11-11-27.5t12-28.5q11-11 27.5-11.5T196-821l30 29 56-56q12-12 28-12t28 12l28 28 30-29q11-11 27.5-11t28.5 12q11 11 11 28t-11 28L338-678l340 340 114-114q11-11 27.5-11.5T848-452q11 11 11.5 27.5T849-396l-29 30 28 28q12 12 12 28t-12 28l-56 56 29 30q11 11 11 27.5T820-140q-11 11-27.5 11.5T764-139l-30-29-56 56q-12 12-28 12t-28-12l-28-28-30 29q-11 11-27.5 11T508-112q-11-11-11-28t11-28l114-114-340-340Z" /></svg>
-          <p>Diario</p>
+      <Link to='/blocks'>
+        <div className={`footer-item${blocks ? ' active' : ''}`}>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-40-343 237-137-237-137-237 137 237 137ZM160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11L160-252Zm320-228Z"/></svg>
+          <p>Bloques</p>
         </div>
       </Link>
       <Link to="/tracks">

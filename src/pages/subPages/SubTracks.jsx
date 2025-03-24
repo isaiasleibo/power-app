@@ -1,181 +1,148 @@
 import React from "react";
-import { Line, Bar } from "react-chartjs-2";
+import { Line, Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  LineElement,
+  LinearScale,
+  TimeScale,
+  PointElement,
+  Tooltip,
+  Legend
+} from 'chart.js';
+import 'chartjs-adapter-date-fns';
 import dayjs from "dayjs";
+
+ChartJS.register(LineElement, LinearScale, TimeScale, PointElement, Tooltip, Legend);
 
 const SubTracks = () => {
   const recoveryData = [
     { date: "2024-10-01", value: 3.2 },
-    { date: "2024-10-02", value: 3.21 },
-    { date: "2024-10-03", value: 3.23 },
-    { date: "2024-10-04", value: 3.24 },
-    { date: "2024-10-05", value: 3.26 },
-    { date: "2024-10-06", value: 3.27 },
-    { date: "2024-10-07", value: 3.29 },
-    { date: "2024-10-08", value: 3.3 },
-    { date: "2024-10-09", value: 3.32 },
-    { date: "2024-10-10", value: 3.33 },
-    { date: "2024-10-11", value: 3.35 },
-    { date: "2024-10-12", value: 3.36 },
-    { date: "2024-10-13", value: 3.38 },
-    { date: "2024-10-14", value: 3.39 },
-    { date: "2024-10-15", value: 3.41 },
-    { date: "2024-10-16", value: 3.42 },
-    { date: "2024-10-17", value: 3.44 },
-    { date: "2024-10-18", value: 3.45 },
-    { date: "2024-10-19", value: 3.47 },
-    { date: "2024-10-20", value: 3.48 },
-    { date: "2024-10-21", value: 3.5 },
-    { date: "2024-10-22", value: 3.51 },
-    { date: "2024-10-23", value: 3.53 },
-    { date: "2024-10-24", value: 3.54 },
-    { date: "2024-10-25", value: 3.56 },
-    { date: "2024-10-26", value: 3.57 },
-    { date: "2024-10-27", value: 3.59 },
-    { date: "2024-10-28", value: 3.6 }
+    { date: "2024-10-02", value: 3.25 },
+    { date: "2024-10-03", value: 3.3 },
+    { date: "2024-10-04", value: 3.4 },
+    { date: "2024-10-05", value: 3.5 },
+    { date: "2024-10-06", value: 3.55 },
+    { date: "2024-10-07", value: 3.6 },
+    { date: "2024-10-08", value: 3.65 },
+    { date: "2024-10-09", value: 3.7 },
+    { date: "2024-10-10", value: 3.75 },
+    { date: "2024-10-11", value: 3.8 },
+    { date: "2024-10-12", value: 3.85 },
+    { date: "2024-10-13", value: 3.9 },
+    { date: "2024-10-15", value: 3.95 },
+    { date: "2024-10-16", value: 4.0 },
+    { date: "2024-10-17", value: 4.1 },
+    { date: "2024-10-18", value: 4.2 },
+    { date: "2024-10-19", value: 4.3 },
+    { date: "2024-10-20", value: 4.35 },
+    { date: "2024-10-21", value: 4.4 },
+    { date: "2024-10-22", value: 4.5 },
+    { date: "2024-10-23", value: 4.6 },
+    { date: "2024-10-24", value: 4.7 },
+    { date: "2024-10-26", value: 4.8 },
+    { date: "2024-10-27", value: 4.9 },
+    { date: "2024-10-28", value: 5.0 },
+    { date: "2024-10-29", value: 5.0 }
   ];
 
   const completeFatigueData = [
-    { date: "2024-10-01", empujes: 3.2, traccion: 2.8, piernas: 3.5 },
-    { date: "2024-10-02", empujes: 3.21, traccion: 2.82, piernas: 3.52 },
-    { date: "2024-10-03", empujes: 3.23, traccion: 2.83, piernas: 3.54 },
-    { date: "2024-10-04", empujes: 3.24, traccion: 2.85, piernas: 3.55 },
-    { date: "2024-10-05", empujes: 3.26, traccion: 2.87, piernas: 3.57 },
-    { date: "2024-10-06", empujes: 3.27, traccion: 2.89, piernas: 3.58 },
-    { date: "2024-10-07", empujes: 3.29, traccion: 2.9, piernas: 3.6 },
-    { date: "2024-10-08", empujes: 3.3, traccion: 2.92, piernas: 3.61 },
-    { date: "2024-10-09", empujes: 3.32, traccion: 2.94, piernas: 3.63 },
-    { date: "2024-10-10", empujes: 3.33, traccion: 2.95, piernas: 3.65 },
-    { date: "2024-10-11", empujes: 3.35, traccion: 2.97, piernas: 3.66 },
-    { date: "2024-10-12", empujes: 3.36, traccion: 2.99, piernas: 3.68 },
-    { date: "2024-10-13", empujes: 3.38, traccion: 3.0, piernas: 3.69 },
-    { date: "2024-10-14", empujes: 3.39, traccion: 3.02, piernas: 3.71 },
-    { date: "2024-10-15", empujes: 3.41, traccion: 3.04, piernas: 3.73 },
-    { date: "2024-10-17", empujes: 3.44, traccion: 3.07, piernas: 3.76 },
-    { date: "2024-10-18", empujes: 3.45, traccion: 3.08, piernas: 3.78 },
-    { date: "2024-10-19", empujes: 3.47, traccion: 3.1, piernas: 3.79 },
-    { date: "2024-10-20", empujes: 3.48, traccion: 3.12, piernas: 3.81 },
-    { date: "2024-10-21", empujes: 3.5, traccion: 3.13, piernas: 3.83 },
-    { date: "2024-10-22", empujes: 3.51, traccion: 3.15, piernas: 3.84 },
-    { date: "2024-10-23", empujes: 3.53, traccion: 3.17, piernas: 3.86 },
-    { date: "2024-10-24", empujes: 3.54, traccion: 3.18, piernas: 3.87 },
-    { date: "2024-10-25", empujes: 3.56, traccion: 3.2, piernas: 3.89 },
-    { date: "2024-10-26", empujes: 3.57, traccion: 3.22, piernas: 3.91 },
-    { date: "2024-10-27", empujes: 3.59, traccion: 3.23, piernas: 3.92 },
-    { date: "2024-10-28", empujes: 3.6, traccion: 3.25, piernas: 3.94 }
-];
-
-
-
-  const fatigueData = [
-    { date: "2024-10-01", value: 2.8 },
-    { date: "2024-10-02", value: 2.81 },
-    { date: "2024-10-04", value: 2.82 },
-    { date: "2024-10-05", value: 2.83 },
-    { date: "2024-10-06", value: 2.84 },
-    { date: "2024-10-07", value: 2.84 },
-    { date: "2024-10-08", value: 2.85 },
-    { date: "2024-10-09", value: 2.86 },
-    { date: "2024-10-10", value: 2.87 },
-    { date: "2024-10-11", value: 2.87 },
-    { date: "2024-10-12", value: 2.88 },
-    { date: "2024-10-13", value: 2.89 },
-    { date: "2024-10-14", value: 2.9 },
-    { date: "2024-10-15", value: 2.9 },
-    { date: "2024-10-16", value: 2.91 },
-    { date: "2024-10-17", value: 2.92 },
-    { date: "2024-10-18", value: 2.93 },
-    { date: "2024-10-19", value: 2.93 },
-    { date: "2024-10-20", value: 2.94 },
-    { date: "2024-10-21", value: 2.95 },
-    { date: "2024-10-22", value: 2.96 },
-    { date: "2024-10-23", value: 2.96 },
-    { date: "2024-10-24", value: 2.97 },
-    { date: "2024-10-25", value: 2.98 },
-    { date: "2024-10-26", value: 2.99 },
-    { date: "2024-10-27", value: 2.99 },
-    { date: "2024-10-28", value: 3.0 }
+    { date: "2024-10-01", empujes: 3.2, traccion: 2.8, piernas: 3.5, total: 9.5 },
+    { date: "2024-10-02", empujes: 3.21, traccion: 2.82, piernas: 3.52, total: 9.55 },
+    { date: "2024-10-03", empujes: 3.23, traccion: 2.83, piernas: 3.54, total: 9.6 },
+    { date: "2024-10-04", empujes: 3.24, traccion: 2.85, piernas: 3.55, total: 9.64 },
+    { date: "2024-10-05", empujes: 3.26, traccion: 2.87, piernas: 3.57, total: 9.7 },
+    { date: "2024-10-06", empujes: 3.27, traccion: 2.89, piernas: 3.58, total: 9.74 },
+    { date: "2024-10-07", empujes: 3.29, traccion: 2.9, piernas: 3.6, total: 9.79 },
+    { date: "2024-10-08", empujes: 3.3, traccion: 2.92, piernas: 3.61, total: 9.83 },
+    { date: "2024-10-09", empujes: 3.32, traccion: 2.94, piernas: 3.63, total: 9.89 },
+    { date: "2024-10-10", empujes: 3.33, traccion: 2.95, piernas: 3.65, total: 9.93 },
+    { date: "2024-10-11", empujes: 3.35, traccion: 2.97, piernas: 3.66, total: 9.98 },
+    { date: "2024-10-12", empujes: 3.36, traccion: 2.99, piernas: 3.68, total: 10.03 },
+    { date: "2024-10-13", empujes: 3.38, traccion: 3.0, piernas: 3.69, total: 10.07 },
+    { date: "2024-10-14", empujes: 3.39, traccion: 3.02, piernas: 3.71, total: 10.12 },
+    { date: "2024-10-15", empujes: 3.41, traccion: 3.04, piernas: 3.73, total: 10.18 },
+    { date: "2024-10-17", empujes: 3.44, traccion: 3.07, piernas: 3.76, total: 10.27 },
+    { date: "2024-10-18", empujes: 3.45, traccion: 3.08, piernas: 3.78, total: 10.31 },
+    { date: "2024-10-19", empujes: 3.47, traccion: 3.1, piernas: 3.79, total: 10.36 },
+    { date: "2024-10-20", empujes: 3.48, traccion: 3.12, piernas: 3.81, total: 10.41 },
+    { date: "2024-10-21", empujes: 3.5, traccion: 3.13, piernas: 3.83, total: 10.46 },
+    { date: "2024-10-22", empujes: 3.51, traccion: 3.15, piernas: 3.84, total: 10.5 },
+    { date: "2024-10-23", empujes: 3.53, traccion: 3.17, piernas: 3.86, total: 10.56 },
+    { date: "2024-10-24", empujes: 3.54, traccion: 3.18, piernas: 3.87, total: 10.59 },
+    { date: "2024-10-25", empujes: 3.56, traccion: 3.2, piernas: 3.89, total: 10.65 },
+    { date: "2024-10-26", empujes: 3.57, traccion: 3.22, piernas: 3.91, total: 10.7 },
+    { date: "2024-10-27", empujes: 3.59, traccion: 3.23, piernas: 3.92, total: 10.74 },
+    { date: "2024-10-28", empujes: 3.6, traccion: 3.25, piernas: 3.94, total: 10.79 },
+    { date: "2024-10-29", empujes: 3.6, traccion: 3.25, piernas: 3.94, total: 10.79 }
   ];
+  
 
-  const getWeeklyAverages = (data) => {
+  const getWeeklyAverages = (data, isFatigueData = false) => {
     if (data.length === 0) return [];
   
-    // Ordenar datos por fecha (por si no vienen ordenados)
     const sortedData = [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
   
-    // Obtener la primera y última fecha
     let startDate = new Date(sortedData[0].date);
     const endDate = new Date(sortedData[sortedData.length - 1].date);
   
-    // Ajustar `startDate` al lunes más cercano anterior o igual
     startDate.setDate(startDate.getDate() - ((startDate.getDay() + 6) % 7));
   
     const weeks = [];
   
     while (startDate <= endDate) {
-      // Calcular el final de la semana (lunes siguiente)
       let weekEnd = new Date(startDate);
       weekEnd.setDate(weekEnd.getDate() + 6);
   
-      // Filtrar datos que caen en esta semana
       const weekData = sortedData.filter((d) => {
         const date = new Date(d.date);
         return date >= startDate && date <= weekEnd;
       });
   
-      // Si hay datos en la semana, calcular promedios
       if (weekData.length > 0) {
-        const avgEmpujes = weekData.reduce((sum, day) => sum + day.empujes, 0) / weekData.length;
-        const avgTraccion = weekData.reduce((sum, day) => sum + day.traccion, 0) / weekData.length;
-        const avgPiernas = weekData.reduce((sum, day) => sum + day.piernas, 0) / weekData.length;
+        let avgValue;
   
-        weeks.push({
-          startDate: startDate.toISOString().split("T")[0],
-          endDate: weekEnd.toISOString().split("T")[0],
-          empujes: avgEmpujes.toFixed(2),
-          traccion: avgTraccion.toFixed(2),
-          piernas: avgPiernas.toFixed(2),
-        });
+        if (isFatigueData) {
+          // Calcular los promedios para los datos de fatiga
+          const avgEmpujes = weekData.reduce((sum, day) => sum + day.empujes, 0) / weekData.length;
+          const avgTraccion = weekData.reduce((sum, day) => sum + day.traccion, 0) / weekData.length;
+          const avgPiernas = weekData.reduce((sum, day) => sum + day.piernas, 0) / weekData.length;
+          const avgTotal = weekData.reduce((sum, day) => sum + day.total / 3, 0) / weekData.length;
+  
+          weeks.push({
+            startDate: startDate.toISOString().split("T")[0],
+            endDate: weekEnd.toISOString().split("T")[0],
+            empujes: avgEmpujes.toFixed(2),
+            traccion: avgTraccion.toFixed(2),
+            piernas: avgPiernas.toFixed(2),
+            total: avgTotal.toFixed(2)
+          });
+        } else {
+          // Calcular el promedio para los datos de recuperación
+          avgValue = weekData.reduce((sum, day) => sum + day.value, 0) / weekData.length;
+  
+          weeks.push({
+            startDate: startDate.toISOString().split("T")[0],
+            endDate: weekEnd.toISOString().split("T")[0],
+            value: avgValue.toFixed(2)
+          });
+        }
       }
   
-      // Avanzar a la próxima semana (lunes siguiente)
       startDate.setDate(startDate.getDate() + 7);
     }
   
-    console.log(weeks);
     return weeks;
   };
-  
-  
 
-  const weeklyAverages = getWeeklyAverages(completeFatigueData);
-
-  const getFilteredData = (data) => {
-
-    const maxPoints = 30;
-    if (data.length <= maxPoints) return data;
-
-    const step = Math.ceil(data.length / maxPoints);
-    let reducedData = data.filter((_, index) => index % step === 0);
-
-    const lastPoint = data[data.length - 1];
-    if (!reducedData.includes(lastPoint)) {
-      reducedData.push(lastPoint);
-    }
-
-    return reducedData;
-  };
-
-
-  const filteredRecovery = getFilteredData(recoveryData)
-  const filtredFatigue = getFilteredData(fatigueData)
-  const labels = filteredRecovery.map((d) => dayjs(d.date).format("DD/MM"));
+  const BarWeeklyAverages = getWeeklyAverages(completeFatigueData, true);
+  const weeklyRecoveryAverages = getWeeklyAverages(recoveryData, false);
 
   const data = {
-    labels,
+    labels: BarWeeklyAverages.map((_, index) => `Week ${index + 1}`),
     datasets: [
       {
         label: "Recuperación",
-        data: filteredRecovery.map((d) => d.value),
+        data: weeklyRecoveryAverages.map((week) => week.value),
         borderColor:"rgb(0, 74, 173)",
         backgroundColor: "rgb(0, 30, 68)",
         tension: 0.4,
@@ -186,8 +153,8 @@ const SubTracks = () => {
       },
       {
         label: "Fatiga",
-        data: filtredFatigue.map((d) => d.value),
-        borderColor:"rgb(255, 48, 48)",
+        data: BarWeeklyAverages.map((week) => week.total),
+        borderColor: "rgb(255, 48, 48)",
         backgroundColor: "rgb(158, 5, 0)",
         tension: 0.4,
         borderWidth: 2,
@@ -199,30 +166,31 @@ const SubTracks = () => {
   };
 
   const barData = {
-    labels: weeklyAverages.map((_, index) => `Week ${index + 1}`),
+    labels: BarWeeklyAverages.map((_, index) => `Week ${index + 1}`),
     datasets: [
       {
         label: "Piernas",
-        data: weeklyAverages.map((week) => week.piernas),
+        data: BarWeeklyAverages.map((week) => week.piernas),
         backgroundColor: "rgb(168, 0, 0)",
       },
       {
         label: "Empujes",
-        data: weeklyAverages.map((week) => week.empujes),
+        data: BarWeeklyAverages.map((week) => week.empujes),
         backgroundColor: "rgb(0, 191, 99)",
       },
       {
         label: "Tracción",
-        data: weeklyAverages.map((week) => week.traccion),
+        data: BarWeeklyAverages.map((week) => week.traccion),
         backgroundColor: "rgb(0, 74, 173)",
       },
     ],
   };
-  
+
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    spanGaps: true,
     scales: {
       x: {
         ticks: {
@@ -264,7 +232,8 @@ const SubTracks = () => {
         bodyColor: '#222222',
         callbacks: {
           label: function (context) {
-            return `${context.raw}`;
+            const label = context.dataset.label
+            return `${label}: ${context.raw}`;
           }
         }
       },
@@ -286,7 +255,7 @@ const SubTracks = () => {
             size: 12,
             weight: 'bold',
           },
-          maxTicksLimit: weeklyAverages.length,
+          maxTicksLimit: BarWeeklyAverages.length,
         },
         grid: {
           display: true,
@@ -336,7 +305,7 @@ const SubTracks = () => {
       },
     },
   };
-  
+
 
   return (
     <div id="exercises">
@@ -352,7 +321,7 @@ const SubTracks = () => {
         </div>
       </div>
       <div className="exercise">
-      <div id="header">
+        <div id="header">
           <h3>Fatiga</h3>
           <div id="block">
             <p>Actual block</p>
