@@ -10,7 +10,6 @@ import {
   Legend
 } from 'chart.js';
 import 'chartjs-adapter-date-fns';
-import dayjs from 'dayjs';
 
 ChartJS.register(LineElement, LinearScale, TimeScale, PointElement, Tooltip, Legend);
 
