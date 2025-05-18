@@ -1,4 +1,4 @@
-#blocks {
+#planifications {
     #records {
         display: flex;
         flex-direction: column;
@@ -6,11 +6,10 @@
         align-items: center;
         padding-top: 20px;
 
-        a, #main-record, #weeks {
+        >a {
           all: unset;
           width: 100%;
           display: flex;
-          flex-direction: column;
           justify-content: center;
           align-items: center;
         }
@@ -25,13 +24,6 @@
             display: flex;
             justify-content: space-between;
             cursor: pointer;
-
-            &.week-record {
-                width: calc(100% - 90px);
-                margin-left: 20px;
-                margin-right: 10px;
-                background-color: #d8d8d8;
-            }
       
             &.notas {
               border: 2px solid #a7a7a7;
@@ -66,21 +58,6 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-
-                &.show-weeks {
-                    width: 20px;
-                    padding-left: 2px;
-
-                    svg {
-                        height: 20px;
-                        width: 20px;
-                        scale: 3;
-
-                        path {
-                            fill: black;
-                        }
-                    }
-                }
       
                 svg {
                   height: 14px;

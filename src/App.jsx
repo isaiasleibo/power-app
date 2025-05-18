@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import Home from './pages/Home';
 import Tracks from './pages/Tracks';
+import Planifications from './pages/Planifications';
 import Blocks from './pages/Blocks';
 import './App.css'
 
@@ -15,7 +16,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tracks" element={<Tracks />} />
-        <Route path="/blocks" element={<Blocks />} />
+        <Route path="/planifications" element={<Planifications />} />
+        <Route path="/planifications/blocks/:idBloque" element={<Blocks />} />
       </Routes>
     </Router>
   );
